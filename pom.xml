@@ -1,32 +1,50 @@
-<project>
-  ...
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.springframework</groupId>
+  <artifactId>jb-hello-world-maven</artifactId>
+  <version>0.2.0</version>
+  <packaging>jar</packaging>
+
   <properties>
-    <!-- Keep one java.version property for reuse -->
+    <!-- Use Java 8 or bump to 11/17 as needed -->
     <java.version>1.8</java.version>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.2</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
-      <!-- Compiler plugin -->
+      <!-- Compile with modern Maven Compiler Plugin, using 'release' to target Java 8 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <!-- Compiles against Java 8 APIs and emits Java 8 bytecode -->
           <release>8</release>
         </configuration>
       </plugin>
 
-      <!-- Your existing shade plugin can stay (but consider upgrading later) -->
+      <!-- Shade plugin to create an executable fat JAR -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.1</version>
+        <version>3.5.3</version>
         <executions>
           <execution>
             <phase>package</phase>
-            <goals><goal>shade</goal></goals>
+            <goals>
+              <goal>shade</goal>
+            </goals>
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
